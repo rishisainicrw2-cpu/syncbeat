@@ -1,0 +1,14 @@
+# Render Blueprint: one web service (API + WebSocket + PWA) + managed Postgres + persistent disk for uploads.
+services:
+  - type: web
+    name: syncbeat
+    runtime: docker
+    plan: starter            # persistent disks require a paid instance
+    healthCheckPath: /api/health
+    disk: { name: uploads, mountPath: /data, sizeGB: 5 }
+    envVars:
+      - { key: JWT_SECRET, generateValue: true }
+      - { key: DATABASE_URL, fromDatabase: { name: syncbeat-db, property: connectionString } }
+      - { key: NODE_ENV, value: production }
+databases:
+  - { name: syncbeat-db, plan: basic-256mb }

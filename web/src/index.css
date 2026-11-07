@@ -1,0 +1,38 @@
+@import '@fontsource-variable/inter';
+@import '@fontsource-variable/sora';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { color-scheme: dark; }
+html, body, #root { min-height: 100%; }
+body {
+  @apply bg-ink text-white font-sans antialiased;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: none;
+}
+::selection { background: rgba(139, 92, 246, .45); }
+
+@layer components {
+  .glass { @apply rounded-3xl border border-white/10 bg-white/[0.045] backdrop-blur-xl; }
+  .grad-text { @apply bg-clip-text text-transparent bg-gradient-to-r from-violet-400 via-violet-500 to-electric-400; }
+  .grad-bg { background-image: linear-gradient(120deg, #8b5cf6 0%, #5b6cff 55%, #2f6bff 100%); }
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded-2xl px-5 py-3 text-[15px] font-semibold transition active:scale-[.97] disabled:opacity-40 disabled:pointer-events-none select-none; }
+  .btn-primary { @apply btn grad-bg text-white shadow-[0_8px_32px_-8px_rgba(99,102,241,.7)] hover:brightness-110; }
+  .btn-ghost { @apply btn border border-white/10 bg-white/5 text-white/90 hover:bg-white/10; }
+  .btn-danger { @apply btn border border-rose-400/30 bg-rose-500/10 text-rose-300 hover:bg-rose-500/20; }
+  .field { @apply w-full rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-[15px] outline-none transition placeholder:text-white/30 focus:border-violet-400/70 focus:bg-white/[0.07]; }
+  .label { @apply mb-1.5 block text-xs font-medium uppercase tracking-wider text-white/45; }
+}
+
+input[type='range'] { -webkit-appearance: none; appearance: none; height: 28px; background: transparent; width: 100%; cursor: pointer; }
+input[type='range']::-webkit-slider-runnable-track { height: 6px; border-radius: 99px; background: linear-gradient(90deg, #8b5cf6 var(--p, 0%), rgba(255,255,255,.12) var(--p, 0%)); }
+input[type='range']::-moz-range-track { height: 6px; border-radius: 99px; background: rgba(255,255,255,.12); }
+input[type='range']::-moz-range-progress { height: 6px; border-radius: 99px; background: #8b5cf6; }
+input[type='range']::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; margin-top: -6px; border-radius: 99px; background: #fff; box-shadow: 0 0 0 4px rgba(139,92,246,.35); }
+input[type='range']::-moz-range-thumb { width: 18px; height: 18px; border: 0; border-radius: 99px; background: #fff; box-shadow: 0 0 0 4px rgba(139,92,246,.35); }
+input[type='range']:disabled { opacity: .45; cursor: default; }
+
+.safe-b { padding-bottom: max(env(safe-area-inset-bottom), 0.75rem); }
+.safe-t { padding-top: max(env(safe-area-inset-top), 0.5rem); }
+@media (prefers-reduced-motion: reduce) { *, ::before, ::after { animation: none !important; transition: none !important; } }

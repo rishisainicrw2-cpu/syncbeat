@@ -1,0 +1,15 @@
+{
+  "name": "syncbeat",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Multi-phone Bluetooth speaker synchronization",
+  "workspaces": ["server", "web"],
+  "scripts": {
+    "dev": "concurrently -n server,web -c magenta,cyan \"npm run dev -w server\" \"npm run dev -w web\"",
+    "build": "npm run build -w web && npm run build -w server",
+    "start": "npm start -w server",
+    "test": "npm test -w server",
+    "typecheck": "npm run typecheck -w server && npm run typecheck -w web"
+  },
+  "devDependencies": { "concurrently": "^9.0.0" }
+}

@@ -1,0 +1,16 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment: { POSTGRES_USER: syncbeat, POSTGRES_PASSWORD: syncbeat, POSTGRES_DB: syncbeat }
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck: { test: ["CMD-SHELL", "pg_isready -U syncbeat"], interval: 5s, retries: 10 }
+  app:
+    build: .
+    ports: ["4000:4000"]
+    depends_on: { db: { condition: service_healthy } }
+    environment:
+      JWT_SECRET: ${JWT_SECRET:?set JWT_SECRET}
+      DATABASE_URL: postgres://syncbeat:syncbeat@db:5432/syncbeat
+      TRUST_PROXY: "0"
+    volumes: [uploads:/data]
+volumes: { pgdata: {}, uploads: {} }
